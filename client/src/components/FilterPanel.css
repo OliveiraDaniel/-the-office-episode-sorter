@@ -29,7 +29,8 @@
   color: var(--ink);
 }
 
-.mode-btn--active {
+.mode-btn--active,
+.mode-btn--active:hover {
   background: var(--ink);
   border-color: var(--ink);
   color: var(--bg);
