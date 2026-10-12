@@ -17,7 +17,7 @@
   text-align: center;
   padding: 1.5rem;
   border-radius: 0.75rem;
-  background: linear-gradient(180deg, #1c1c1c 0%, #0d0d0d 100%);
+  background: #000;
   border: 3px solid var(--accent-dark);
   box-shadow:
     inset 0 0 25px rgba(0, 0, 0, 0.5),
@@ -38,11 +38,11 @@
 }
 .slot-reel::before {
   top: 0;
-  background: linear-gradient(180deg, #0d0d0d 0%, transparent 100%);
+  background: linear-gradient(180deg, #000 0%, transparent 100%);
 }
 .slot-reel::after {
   bottom: 0;
-  background: linear-gradient(0deg, #0d0d0d 0%, transparent 100%);
+  background: linear-gradient(0deg, #000 0%, transparent 100%);
 }
 
 .slot-reel__tag {
@@ -96,10 +96,9 @@
   font-weight: 700;
   border-radius: 999px;
   border: none;
-  background: linear-gradient(180deg, #ffce33 0%, var(--accent) 60%, var(--accent-dark) 100%);
+  background-color: #ffce33;
   color: var(--accent-ink);
   cursor: pointer;
-  box-shadow: 0 4px 0 var(--accent-dark), 0 8px 16px rgba(0, 0, 0, 0.45);
   transition: transform 0.1s ease;
 }
 
@@ -109,7 +108,6 @@
 
 .spin-btn:not(:disabled):active {
   transform: translateY(2px);
-  box-shadow: 0 2px 0 var(--accent-dark), 0 4px 8px rgba(0, 0, 0, 0.45);
 }
 
 .spin-btn:disabled {

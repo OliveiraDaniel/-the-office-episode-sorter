@@ -24,6 +24,7 @@ body {
 
 #root {
   min-height: 100vh;
+  background-color: #000;
   display: flex;
   justify-content: center;
   padding: 2.5rem 1.25rem 4rem;

@@ -40,9 +40,9 @@
   width: min(320px, 100%);
   padding: 0.6rem 0.8rem;
   border-radius: 0.5rem;
-  border: 1px solid var(--panel-border);
+  border: 1px solid #fff;
   background: var(--panel);
-  color: var(--ink);
+  color: #fff;
   font-size: 0.95rem;
 }
 
@@ -50,4 +50,10 @@
   margin: 0;
   font-size: 0.85rem;
   color: var(--ink-muted);
+}
+
+@media (max-width: 400px) {
+  .mode-btn {
+    width: 100%;
+  }
 }
