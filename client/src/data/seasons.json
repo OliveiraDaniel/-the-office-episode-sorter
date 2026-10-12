@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "number": 1,
+    "startDate": "2005-03-24",
+    "endDate": "2005-04-26"
+  },
+  {
+    "id": 2,
+    "number": 2,
+    "startDate": "2005-09-20",
+    "endDate": "2006-05-11"
+  },
+  {
+    "id": 3,
+    "number": 3,
+    "startDate": "2206-09-21",
+    "endDate": "2007-05-17"
+  },
+  {
+    "id": 4,
+    "number": 4,
+    "startDate": "2007-09-27",
+    "endDate": "2008-05-15"
+  },
+  {
+    "id": 5,
+    "number": 5,
+    "startDate": "2008-09-25",
+    "endDate": "2009-05-14"
+  },
+  {
+    "id": 6,
+    "number": 6,
+    "startDate": "2009-09-17",
+    "endDate": "2010-05-20"
+  },
+  {
+    "id": 7,
+    "number": 7,
+    "startDate": "2010-09-23",
+    "endDate": "2011-05-19"
+  },
+  {
+    "id": 8,
+    "number": 8,
+    "startDate": "2011-09-22",
+    "endDate": "2012-05-10"
+  },
+  {
+    "id": 9,
+    "number": 9,
+    "startDate": "2012-09-20",
+    "endDate": "2013-05-16"
+  }
+]

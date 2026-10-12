@@ -1,16 +1,29 @@
-const BASE = "/api";
+// The show ended in 2013, so this data never changes — it ships as a static
+// snapshot (see scripts/fetch-office-data.mjs) instead of being fetched at
+// runtime. No backend, no network calls, no loading states needed.
+import episodes from "./data/episodes.json";
+import mainCharacters from "./data/mainCharacters.json";
+import seasons from "./data/seasons.json";
 
-async function getJson(path) {
-  const res = await fetch(`${BASE}${path}`);
-  if (!res.ok) throw new Error(`API error on ${path}: ${res.status}`);
-  return res.json();
+export function getSeasons() {
+  return seasons;
 }
 
-export const getSeasons = () => getJson("/seasons");
-export const getMainCharacters = () => getJson("/characters/main");
+export function getMainCharacters() {
+  return mainCharacters;
+}
 
 export function getEpisodes({ mode, seasonId, characterId }) {
-  if (mode === "season" && seasonId) return getJson(`/episodes?season=${seasonId}`);
-  if (mode === "character" && characterId) return getJson(`/episodes?characterId=${characterId}`);
-  return getJson("/episodes");
+  if (mode === "season" && seasonId) {
+    return episodes.filter((e) => e.seasonId === seasonId);
+  }
+
+  if (mode === "character" && characterId) {
+    const character = mainCharacters.find((c) => c.id === characterId);
+    if (!character) return [];
+    const { start, end } = character.range;
+    return episodes.filter((e) => e.seriesEpisodeNumber >= start && e.seriesEpisodeNumber <= end);
+  }
+
+  return episodes;
 }

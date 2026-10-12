@@ -1,18 +1,14 @@
 {
-  "name": "the-office-roulette",
+  "name": "the-office-episode-sorter",
   "private": true,
   "version": "1.0.0",
   "workspaces": [
-    "client",
-    "server"
+    "client"
   ],
   "scripts": {
-    "dev": "concurrently -n server,client -c blue,green \"npm:dev:server\" \"npm:dev:client\"",
-    "dev:server": "npm run dev --workspace server",
-    "dev:client": "npm run dev --workspace client",
-    "build": "npm run build --workspace client"
-  },
-  "devDependencies": {
-    "concurrently": "^9.1.0"
+    "dev": "npm run dev --workspace client",
+    "build": "npm run build --workspace client",
+    "preview": "npm run preview --workspace client",
+    "fetch-data": "node scripts/fetch-office-data.mjs"
   }
 }

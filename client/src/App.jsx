@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { getEpisodes, getMainCharacters, getSeasons } from "./api.js";
 import FilterPanel from "./components/FilterPanel.jsx";
 import SlotMachine from "./components/SlotMachine.jsx";
@@ -6,37 +6,19 @@ import EpisodeCard from "./components/EpisodeCard.jsx";
 import theOfficeLogo from "./assets/the-office-logo.png";
 import "./App.css";
 
+const seasons = getSeasons();
+const characters = getMainCharacters();
+
 export default function App() {
   const [mode, setMode] = useState("all");
-  const [seasons, setSeasons] = useState([]);
-  const [characters, setCharacters] = useState([]);
   const [seasonId, setSeasonId] = useState(null);
   const [characterId, setCharacterId] = useState(null);
-
-  const [pool, setPool] = useState([]);
-  const [loadingPool, setLoadingPool] = useState(true);
   const [result, setResult] = useState(null);
 
-  useEffect(() => {
-    getSeasons().then(setSeasons).catch(() => setSeasons([]));
-    getMainCharacters().then(setCharacters).catch(() => setCharacters([]));
-  }, []);
-
-  useEffect(() => {
-    if (mode === "season" && !seasonId) {
-      setPool([]);
-      return;
-    }
-    if (mode === "character" && !characterId) {
-      setPool([]);
-      return;
-    }
-
-    setLoadingPool(true);
-    getEpisodes({ mode, seasonId, characterId })
-      .then(setPool)
-      .catch(() => setPool([]))
-      .finally(() => setLoadingPool(false));
+  const pool = useMemo(() => {
+    if (mode === "season" && !seasonId) return [];
+    if (mode === "character" && !characterId) return [];
+    return getEpisodes({ mode, seasonId, characterId });
   }, [mode, seasonId, characterId]);
 
   function handleModeChange(nextMode) {
@@ -64,7 +46,7 @@ export default function App() {
         episodeCount={pool.length}
       />
 
-      <SlotMachine pool={loadingPool ? [] : pool} onResult={setResult} />
+      <SlotMachine pool={pool} onResult={setResult} />
 
       <EpisodeCard episode={result} />
     </div>

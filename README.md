@@ -4,57 +4,58 @@ Sorteador de episódios de *The Office* em estilo máquina de caça-níqueis. Es
 episódio aleatório a partir de um filtro (todos, por temporada, ou por personagem
 principal) e mostra o resultado com título, data e sinopse.
 
-Os nomes internos de pastas/pacotes (`the-office-roulette`, `SlotMachine`, etc.)
-ficaram como estão — só o nome exibido para quem usa o app mudou.
-
-Dados consumidos de [theofficeapi.dev](https://theofficeapi.dev/).
+🔗 Publicado em: https://oliveiradaniel.github.io/-the-office-episode-sorter/
 
 ## Estrutura
 
 ```
-server/   API Express que faz proxy/cache dos dados de theofficeapi.dev
-client/   Front-end em React (Vite)
+client/   Front-end em React (Vite) — é todo o app, 100% estático
+scripts/  Script Node único para gerar o snapshot de dados (ver abaixo)
 ```
 
-### Por que um backend?
+### Por que não tem backend?
 
-A API pública pagina episódios/personagens (19 e 9 páginas respectivamente) e não
-expõe nativamente filtros por temporada/personagem nem relação episódio↔personagem.
-O servidor Node agrega tudo uma vez, mantém em cache (12h) e expõe endpoints já
-filtrados para o front consumir:
+A série acabou em 2013, então os dados de [theofficeapi.dev](https://theofficeapi.dev/)
+(episódios, temporadas, personagens) nunca mudam. Em vez de chamar a API em tempo de
+execução, `scripts/fetch-office-data.mjs` busca tudo uma vez e grava como JSON estático
+dentro de `client/src/data/` (`episodes.json`, `seasons.json`, `mainCharacters.json`).
+O app lê esses arquivos direto, sem rede, sem servidor.
 
-- `GET /api/seasons`
-- `GET /api/characters/main` — lista curada de personagens principais (a API não
-  marca quem é "main cast", então essa lista é mantida à mão em
-  `server/src/mainCharacters.js`)
-- `GET /api/episodes` — todos os episódios
-- `GET /api/episodes?season=<id>` — episódios de uma temporada
-- `GET /api/episodes?characterId=<id>` — aproximação dos episódios "do" personagem
+- `mainCharacters.json` já vem com a lista curada de personagens principais (a API
+  não marca quem é "main cast", isso é mantido à mão no próprio script) e o intervalo
+  de episódios de cada um.
+- **Limitação conhecida:** a API não informa o elenco de cada episódio, só a primeira
+  e a última aparição de cada personagem. O filtro por personagem usa esse intervalo
+  (`firstAppearance` → `lastAppearance`) como aproximação, não a lista exata de
+  episódios em que ele aparece.
 
-**Limitação conhecida:** a API não informa o elenco de cada episódio, só a primeira
-e a última aparição de cada personagem. O filtro por personagem usa esse intervalo
-(`firstAppearance` → `lastAppearance`) como aproximação, não a lista exata de
-episódios em que ele aparece.
+Se a API corrigir algum dado ou você quiser atualizar o snapshot:
+
+```bash
+npm run fetch-data
+```
 
 ## Rodando localmente
 
 ```bash
-npm install          # instala client + server (workspaces)
-npm run dev           # sobe server (porta 3001) e client (porta 5173) juntos
+npm install
+npm run dev
 ```
 
-Acesse http://localhost:5173. O Vite já faz proxy de `/api` para o backend em dev.
+Acesse http://localhost:5173.
 
-Scripts individuais, se preferir:
+## Publicando no GitHub Pages
 
-```bash
-npm run dev:server
-npm run dev:client
-```
+O workflow em `.github/workflows/deploy.yml` builda e publica a cada push na `main`,
+via GitHub Actions (`actions/deploy-pages`). Só precisa habilitar uma vez, em
+**Settings → Pages → Build and deployment → Source: "GitHub Actions"**.
+
+O `base` em `client/vite.config.js` já está configurado para o caminho do projeto
+(`/-the-office-episode-sorter/`), já que é uma project page (não é `usuario.github.io`
+na raiz).
 
 ## Próximos passos (ideias)
 
 - Persistir/compartilhar o resultado sorteado (link, histórico)
 - Evitar repetir o mesmo episódio em sorteios consecutivos
-- Trocar a lista estática de personagens principais por algo mais dinâmico, se a
-  API vier a expor essa informação
+- Traduzir título/sinopse para português
