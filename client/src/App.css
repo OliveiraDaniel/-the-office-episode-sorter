@@ -1,0 +1,33 @@
+.app {
+  width: min(560px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.app__header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.app__logo {
+  width: min(320px, 90%);
+  height: auto;
+}
+
+.app__header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+
+.app__header p {
+  margin: 0;
+  color: var(--ink-muted);
+}

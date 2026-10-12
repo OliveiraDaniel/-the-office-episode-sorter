@@ -1,0 +1,118 @@
+.slot-machine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.slot-reel {
+  width: 100%;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(180deg, #1c1c1c 0%, #0d0d0d 100%);
+  border: 3px solid var(--accent-dark);
+  box-shadow:
+    inset 0 0 25px rgba(0, 0, 0, 0.5),
+    0 8px 24px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.slot-reel::before,
+.slot-reel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 28px;
+  pointer-events: none;
+  z-index: 1;
+}
+.slot-reel::before {
+  top: 0;
+  background: linear-gradient(180deg, #0d0d0d 0%, transparent 100%);
+}
+.slot-reel::after {
+  bottom: 0;
+  background: linear-gradient(0deg, #0d0d0d 0%, transparent 100%);
+}
+
+.slot-reel__tag {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.slot-reel__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.slot-reel__placeholder {
+  color: var(--ink-muted);
+  font-size: 1rem;
+}
+
+.slot-reel--spinning .slot-reel__title,
+.slot-reel--spinning .slot-reel__tag {
+  animation: slot-flicker 0.09s linear infinite;
+}
+
+.slot-reel--spinning {
+  border-color: var(--accent);
+}
+
+@keyframes slot-flicker {
+  0% {
+    transform: translateY(-6px);
+    filter: blur(1.5px);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(2px);
+    filter: blur(0.5px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-6px);
+    filter: blur(1.5px);
+    opacity: 0.6;
+  }
+}
+
+.spin-btn {
+  padding: 0.85rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(180deg, #ffce33 0%, var(--accent) 60%, var(--accent-dark) 100%);
+  color: var(--accent-ink);
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--accent-dark), 0 8px 16px rgba(0, 0, 0, 0.45);
+  transition: transform 0.1s ease;
+}
+
+.spin-btn:not(:disabled):hover {
+  transform: translateY(-2px);
+}
+
+.spin-btn:not(:disabled):active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--accent-dark), 0 4px 8px rgba(0, 0, 0, 0.45);
+}
+
+.spin-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
